@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MS Dhoni — Captain Cool</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --gold: #C9A84C; --gold-light: #E8C96A; --navy: #0A0E1A; --cream: #F5EDD6; --cream-muted: #C8B98A; --text: #EDE8D8; --muted: #8899AA; }
+  body { background: var(--navy); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+  
+  /* Nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; background: linear-gradient(to bottom, rgba(10,14,26,0.95), transparent); backdrop-filter: blur(4px); }
+  .nav-logo a { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); transition: color 0.25s; }
+  .nav-links a.active { color: var(--gold); }
+  
+  /* Hero */
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 0 4rem; }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; animation: fadeUp 1s ease both; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(4rem, 9vw, 8rem); font-weight: 900; line-height: 0.9; color: var(--cream); }
+  .hero-title span { color: var(--gold); display: block; }
+  .btn-primary { display: inline-block; padding: 0.9rem 2.2rem; background: var(--gold); color: var(--navy); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; text-decoration: none; }
+  
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo"><a href="index.html">MSD · 7</a></div>
+  <ul class="nav-links">
+    <li><a href="legacy.html">Legacy</a></li>
+    <li><a href="chapters.html">Legends</a></li>
+    <li><a href="titles.html">Titles</a></li>
+    <li><a href="journey.html">Journey</a></li>
+    <li><a href="index.html" class="active">Records</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Captain<span>Cool.</span></h1>
+    <p>From the tea-gardens of Ranchi to the summit of world cricket.</p>
+    <div style="margin-top: 2rem;">
+      <a href="legacy.html" class="btn-primary">Explore Legacy</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>
