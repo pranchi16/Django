@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Collection Dashboard</title>
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #111827;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Container Card */
+        .dashboard-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 1000px;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Header Layout */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 16px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Add Button */
+        .btn-add {
+            background-color: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn-add:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Table Styling */
+        .movie-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .movie-table th {
+            background-color: #f9fafb;
+            color: #4b5563;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .movie-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 15px;
+            color: #374151;
+            vertical-align: middle;
+        }
+
+        .movie-table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* Movie Badges Based on Genre Type */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 100px;
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        /* Row-Action Buttons */
+        .action-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-edit {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-edit:hover {
+            text-decoration: underline;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            text-decoration: underline;
+        }
+
+        /* Empty Database Styling */
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #6b7280;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>My Movie Database</h1>
+        <a href="{% url 'add_movie' %}" class="btn-add">+ Add New Movie</a>
+    </div>
+
+    <table class="movie-table">
+        <thead>
+            <tr>
+                <th>Movie Name</th>
+                <th>Director</th>
+                <th>Type of Movie</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+            <tr>
+                <td><strong>{{ movie.title }}</strong></td>
+                
+                <td>{{ movie.director }}</td>
+                
+                <td><span class="badge">{{ movie.get_movie_type_display }}</span></td>
+                
+                <td>⭐ {{ movie.rating }}/10</td>
+                
+                <td>
+                    <div class="action-links">
+                        <a href="{% url 'edit_movie' movie.pk %}" class="btn-edit">Edit</a>
+                        
+                        <form action="{% url 'delete_movie' movie.pk %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete &quot;{{ movie.title }}&quot;?');">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty-state">
+                    No movies found in your database dashboard. Click "+ Add New Movie" to create one.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if movie %}Edit Movie{% else %}Add New Movie{% endif %}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f3f4f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #1f2937; }
+        .form-card { background-color: #ffffff; padding: 32px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 440px; }
+        .form-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+        .form-card p { font-size: 14px; color: #6b7280; margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        .form-input { width: 100%; padding: 12px 14px; font-size: 15px; border: 1px solid #d1d5db; border-radius: 8px; outline: none; }
+        .form-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+        .btn-wrapper { display: flex; gap: 12px; margin-top: 28px; }
+        .btn { flex: 1; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; text-align: center; text-decoration: none; }
+        .btn-save { background-color: #2563eb; color: #ffffff; }
+        .btn-save:hover { background-color: #1d4ed8; }
+        .btn-cancel { background-color: #f3f4f6; color: #4b5563; }
+        .btn-cancel:hover { background-color: #e5e7eb; }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h2>{% if movie %}Edit Movie{% else %}Add New Movie{% endif %}</h2>
+    <p>Fill in details to save this title into your collection.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="movie_name">Movie Name</label>
+            <input type="text" id="movie_name" name="html_title" class="form-input" 
+                   value="{% if movie %}{{ movie.title }}{% endif %}" placeholder="Enter movie title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="director_name">Director Name</label>
+            <input type="text" id="director_name" name="html_director" class="form-input" 
+                   value="{% if movie %}{{ movie.director }}{% endif %}" placeholder="Enter director's name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="movie_type">Type of Movie</label>
+            <select id="movie_type" name="html_type" class="form-input" style="cursor: pointer;">
+                <option value="ACTION" {% if movie.movie_type == "ACTION" %}selected{% endif %}>Action</option>
+                <option value="COMEDY" {% if movie.movie_type == "COMEDY" %}selected{% endif %}>Comedy</option>
+                <option value="DRAMA" {% if movie.movie_type == "DRAMA" %}selected{% endif %}>Drama</option>
+                <option value="SCI-FI" {% if movie.movie_type == "SCI-FI" %}selected{% endif %}>Sci-Fi</option>
+                <option value="HORROR" {% if movie.movie_type == "HORROR" %}selected{% endif %}>Horror</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="movie_rating">Rating (1 to 10)</label>
+            <input type="number" id="movie_rating" name="html_rating" class="form-input" min="1" max="10" 
+                   value="{% if movie %}{{ movie.rating }}{% endif %}" placeholder="e.g. 8" required>
+        </div>
+
+        <div class="btn-wrapper">
+            <a href="{% url 'movie_list' %}" class="btn btn-cancel">Cancel</a>
+            <button type="submit" class="btn btn-save">Save Movie</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
